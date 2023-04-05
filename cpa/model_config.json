@@ -1,0 +1,83 @@
+{   
+    "hparams":{
+        "adversary_steps": 1,
+        "penalty_adversary": 1,
+        "reg_adversary": 1
+    },
+    "training":{
+        "devices":1,
+        "accelerator":"gpu",
+        "max_epochs":1000
+    }
+    "optim":{
+        "recon":{
+            "lr":0.0001,
+            "weight_decay":0.0
+            },
+        "adversaries":{
+            "lr":0.0001,
+            "weight_decay":0.0
+            },
+        },
+    "loss":{
+        "reconstruction":"CSTGaussianNLLLoss",
+        "adversarial":"torch.nn.CrossEntropyLoss"
+    },
+    "model":{
+        "num_genes": 1024,
+        "num_perturbations": 188,
+        "perturbation_enc_dims":[2048],
+        "num_covariates":1,
+        "gene_expression_encoder":{
+            "fn":"MLP",
+            "args":{
+                "sizes":[1024, 128, 128, 128, 128 ],
+                "batch_norm":true,
+                "last_layer_act":"linear"
+            }
+        },
+        "perturbation_encoders":[
+            {
+                "fn":"DrugPerturbationEncoder",
+                "args":{
+                    "dose_encoder":{
+                        "fn":"MLP",
+                        "args":{
+                            "sizes":[2049, 64, 64,1],
+                            "batch_norm":false,
+                            "last_layer_act":"linear"
+                        }
+                    },
+                    "perturbation_encoder":{
+                        "fn":"MLP",
+                        "args":{
+                            "sizes":[2048, 128, 128, 128, 128],
+                            "batch_norm":true,
+                            "last_layer_act":"linear"
+                        }
+                    }
+
+                }
+            }
+        ],
+        "adversarial_classifiers":[
+            {
+                "fn":"MLP",
+                "args":{
+                    "sizes":[128, 128, 128, 128, 188],
+                    "batch_norm":true,
+                    "last_layer_act":"linear"
+                }
+            }
+        ],
+        "latent_decoder":{
+            "fn":"DecoderMLP",
+            "args":{
+                "sizes":[128, 128, 128, 128, 2048],
+                "batch_norm":true,
+                "last_layer_act":"linear"
+            }
+
+        }
+    }
+}
