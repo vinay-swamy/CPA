@@ -245,7 +245,7 @@ def prepare_cpa(args, state_dict=None):
     Instantiates autoencoder and dataset to run an experiment.
     """
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = args['device']
 
     datasets = load_dataset_splits(
         args["data"],

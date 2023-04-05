@@ -135,7 +135,7 @@ class CPA(torch.nn.Module):
         num_genes,
         num_drugs,
         num_covariates,
-        device="cuda",
+        device,
         seed=0,
         patience=5,
         loss_ae="gauss",

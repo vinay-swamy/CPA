@@ -124,24 +124,24 @@ class Dataset:
             data.obs[split_key].loc[idx_train] = "train"
             data.obs[split_key].loc[idx_test] = "test"
 
-        if "control" in data.obs:
-            self.ctrl = data.obs["control"].values
-        else:
-            print(f"Assigning control values for {control}")
-            assert_msg = "Please provide a name for control condition."
-            assert not (control is None), assert_msg
-            data.obs["control"] = 0
-            if dose_key in data.obs:
-                pert, dose = control.split("_")
-                data.obs.loc[
-                    (data.obs[perturbation_key] == pert) & (data.obs[dose_key] == dose),
-                    "control",
-                ] = 1
-            else:
-                pert = control
-                data.obs.loc[(data.obs[perturbation_key] == pert), "control"] = 1
+        # if "control" in data.obs:
+        #     self.ctrl = data.obs["control"].values
+        # else:
+        #     print(f"Assigning control values for {control}")
+        #     assert_msg = "Please provide a name for control condition."
+        #     assert not (control is None), assert_msg
+        #     data.obs["control"] = 0
+        #     if dose_key in data.obs:
+        #         pert, dose = control.split("_")
+        #         data.obs.loc[
+        #             (data.obs[perturbation_key] == pert) & (data.obs[dose_key] == dose),
+        #             "control",
+        #         ] = 1
+        #     else:
+        #         pert = control
+        #         data.obs.loc[(data.obs[perturbation_key] == pert), "control"] = 1
 
-            self.ctrl = data.obs["control"].values
+        #     self.ctrl = data.obs["control"].values
             assert_msg = "Cells to assign as control not found! Please check the name of control variable."
             assert sum(self.ctrl), assert_msg
             print(f"Assigned {sum(self.ctrl)} control cells")

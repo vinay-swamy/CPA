@@ -28,6 +28,7 @@ class API:
     def __init__(
         self,
         data,
+        device,
         perturbation_key="condition",
         covariate_keys=["cell_type"],
         split_key="split",
@@ -39,7 +40,6 @@ class API:
         patience=200,
         seed=0,
         pretrained=None,
-        device="cuda",
         save_dir="/tmp/",  # directory to save the model
         hparams={},
         only_parameters=False,
